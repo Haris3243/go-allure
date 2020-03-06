@@ -1,4 +1,4 @@
-package Goallure
+package goallure
 
 /*
 	Purpose:	custom plugin for allure-reports
