@@ -64,9 +64,9 @@ type Failure struct{
 type Step struct{
 	Name	string		`json:"name"`
 	Title	string		`json:"title"`
-	Start   uint64			`json:"start"`
-	Stop	uint64			`json:"stop"`
-	Status	string	`json:"status"`
+	Start   uint64		`json:"start"`
+	Stop	uint64		`json:"stop"`
+	Status	string		`json:"status"`
 	//for now leaving nested steps
 	//Steps	[]Step		`json:"steps"`
 	Attachments	[]Attachment	`json:"attachments"`
@@ -77,12 +77,12 @@ type TestCase struct{
 	Name		string		`json:"name"`
 	Title		string		`json:"title"`
 	Description	Description	`json:"description"`
-	Start		uint64			`json:"start"`
-	Stop		uint64			`json:"stop"`
-	Severity 	string	`json:"severity"`
-	Status		string	`json:"status"`
+	Start		uint64		`json:"start"`
+	Stop		uint64		`json:"stop"`
+	Severity 	string		`json:"severity"`
+	Status		string		`json:"status"`
 	Failure		Failure		`json:"failure"`
-	Attachments	[]Attachment	`json:"attachments"`
+	Attachments	[]Attachment`json:"attachments"`
 	Steps		[]Step		`json:"steps"`
 	Labels		[]Label		`json:"labels"`
 }
@@ -90,8 +90,9 @@ type TestCase struct{
 //suit
 type Suit 	struct{
 	Name		string		`json:"name"`
-	Start		uint64			`json:"start"`
-	Stop		uint64			`json:"stop"`
+	Title		string		`json:"title"`
+	Start		uint64		`json:"start"`
+	Stop		uint64		`json:"stop"`
 	Version		string		`json:"version"`
 	TestCases	[]TestCase	`json:"testCases"`
 	Labels		[]Label		`json:"Labels"`
@@ -152,4 +153,46 @@ func CreateStep(name string,title string, start uint64,stop uint64, status strin
 		return step,nil
 	}
 	return step,fmt.Errorf("Error! Invalid or  Empty Values for step object.")
+}
+
+//testcase
+func CreateTestCase(name string, title string, des Description, start uint64, stop uint64, severity string, status string, fail Failure, attachments []Attachment, steps []Step, labels []Label) (TestCase,error) {
+	var testCase TestCase
+	if(name != "" && start != 0 && stop != 0 && status != ""){
+		testCase.Name	= name
+		testCase.Title	= title
+		testCase.Start	= start
+		testCase.Stop	= stop
+		testCase.Status	= status
+		testCase.Description	= des
+		testCase.Severity	= severity
+		
+		if(status == FAILED){
+			testCase.Failure = fail
+		}
+
+		testCase.Attachments = attachments
+		testCase.Steps	= steps
+		testCase.Labels	= labels
+
+		return testCase,nil
+	}
+	return testCase,fmt.Errorf("Error! Invalid or  Empty Values for testCase object.")
+}
+
+//suit
+func CreateSuit(name string, title string, start uint64, stop uint64, version string, testCases []TestCase, labels []Label)(Suit,error){
+	var suit Suit
+	if (name != "" && start != 0 && stop != 0){
+		suit.Name	= name
+		suit.Title	= title
+		suit.Start	= start
+		suit.Stop	= stop
+		suit.Version= version
+		suit.TestCases = testCases
+		suit.Labels	= labels
+		return suit,nil
+	}
+
+	return suit, fmt.Errorf("Error! invalid or empty Values for suit object.")
 }
