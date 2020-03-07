@@ -64,8 +64,8 @@ type Failure struct{
 type Step struct{
 	Name	string		`json:"name"`
 	Title	string		`json:"title"`
-	Start   uint64		`json:"start"`
-	Stop	uint64		`json:"stop"`
+	Start   int64		`json:"start"`
+	Stop	int64		`json:"stop"`
 	Status	string		`json:"status"`
 	//for now leaving nested steps
 	//Steps	[]Step		`json:"steps"`
@@ -77,8 +77,8 @@ type TestCase struct{
 	Name		string		`json:"name"`
 	Title		string		`json:"title"`
 	Description	Description	`json:"description"`
-	Start		uint64		`json:"start"`
-	Stop		uint64		`json:"stop"`
+	Start		int64		`json:"start"`
+	Stop		int64		`json:"stop"`
 	Severity 	string		`json:"severity"`
 	Status		string		`json:"status"`
 	Failure		Failure		`json:"failure"`
@@ -91,8 +91,8 @@ type TestCase struct{
 type Suit 	struct{
 	Name		string		`json:"name"`
 	Title		string		`json:"title"`
-	Start		uint64		`json:"start"`
-	Stop		uint64		`json:"stop"`
+	Start		int64		`json:"start"`
+	Stop		int64		`json:"stop"`
 	Version		string		`json:"version"`
 	TestCases	[]TestCase	`json:"testCases"`
 	Labels		[]Label		`json:"Labels"`
@@ -140,7 +140,7 @@ func CreateAttachment(title string,atype string,src string)(Attachment,error){
 }
 
 //step
-func CreateStep(name string,title string, start uint64,stop uint64, status string, attach []Attachment)(Step,error){
+func CreateStep(name string,title string, start int64,stop int64, status string, attach []Attachment)(Step,error){
 	var step Step
 	if (name != "" && title != "" && start != 0 && stop != 0 && status != ""){
 		step.Name=name
@@ -156,7 +156,7 @@ func CreateStep(name string,title string, start uint64,stop uint64, status strin
 }
 
 //testcase
-func CreateTestCase(name string, title string, des Description, start uint64, stop uint64, severity string, status string, fail Failure, attachments []Attachment, steps []Step, labels []Label) (TestCase,error) {
+func CreateTestCase(name string, title string, des Description, start int64, stop int64, severity string, status string, fail Failure, attachments []Attachment, steps []Step, labels []Label) (TestCase,error) {
 	var testCase TestCase
 	if(name != "" && start != 0 && stop != 0 && status != ""){
 		testCase.Name	= name
@@ -181,7 +181,7 @@ func CreateTestCase(name string, title string, des Description, start uint64, st
 }
 
 //suit
-func CreateSuit(name string, title string, start uint64, stop uint64, version string, testCases []TestCase, labels []Label)(Suit,error){
+func CreateSuit(name string, title string, start int64, stop int64, version string, testCases []TestCase, labels []Label)(Suit,error){
 	var suit Suit
 	if (name != "" && start != 0 && stop != 0){
 		suit.Name	= name
