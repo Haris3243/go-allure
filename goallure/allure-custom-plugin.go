@@ -95,7 +95,7 @@ type Suit 	struct{
 	Stop		int64		`json:"stop"`
 	Version		string		`json:"version"`
 	TestCases	[]TestCase	`json:"testCases"`
-	Labels		[]Label		`json:"Labels"`
+	Labels		[]Label		`json:"labels"`
 }
 
 //create label object
